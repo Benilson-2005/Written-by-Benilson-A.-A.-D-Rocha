@@ -1,0 +1,142 @@
+ <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Written by Benilson A. A. D'Rocha</title>
+    <link href="https://fonts.googleapis.com/css2?family=Georgia:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Georgia, serif;
+            background-color: #f5f5dc;
+            margin: 0;
+            padding: 0;
+        }
+
+        .caderno {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Texto invisível inicialmente */
+        .texto {
+            opacity: 0;
+            transform: translateY(20px); /* Move o texto para baixo */
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Animação suave */
+        }
+
+        /* Classe que será adicionada quando o texto estiver visível */
+        .texto.visivel {
+            opacity: 1;
+            transform: translateY(0); /* Texto volta para a posição original */
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        p {
+            font-size: 1.2em;
+            text-align: justify;
+            margin-bottom: 10px;
+        }
+
+        /* Estilo para os botões */
+        .botao {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin: 10px 0;
+            border: none;
+            cursor: pointer;
+        }
+
+        .botao-compartilhar {
+            background-color: #008CBA;
+        }
+
+        .texto {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="caderno">
+        <h1>Written by Benilson A. A. D'Rocha</h1>
+        
+        <!-- Primeiro trecho de texto -->
+        <div class="texto">
+            <p id="trecho1">Este é o primeiro trecho de texto que pode ser compartilhado ou baixado.</p>
+            <button class="botao" onclick="baixarTexto('trecho1')">Baixar trecho</button>
+            <button class="botao botao-compartilhar" onclick="compartilharTexto('trecho1')">Compartilhar trecho</button>
+        </div>
+
+        <!-- Segundo trecho de texto -->
+        <div class="texto">
+            <p id="trecho2">Este é o segundo trecho de texto, e ele também pode ser baixado ou compartilhado.</p>
+            <button class="botao" onclick="baixarTexto('trecho2')">Baixar trecho</button>
+            <button class="botao botao-compartilhar" onclick="compartilharTexto('trecho2')">Compartilhar trecho</button>
+        </div>
+
+        <!-- Terceiro trecho de texto -->
+        <div class="texto">
+            <p id="trecho3">Este é o terceiro trecho, mostrando como é possível baixar ou compartilhar várias seções de texto separadamente.</p>
+            <button class="botao" onclick="baixarTexto('trecho3')">Baixar trecho</button>
+            <button class="botao botao-compartilhar" onclick="compartilharTexto('trecho3')">Compartilhar trecho</button>
+        </div>
+    </div>
+
+    <script>
+        // Função para adicionar a classe 'visivel' quando o texto entra na visão do usuário
+        function mostrarTexto() {
+            var textos = document.querySelectorAll('.texto');
+            var posicaoJanela = window.innerHeight;
+
+            textos.forEach(function(texto) {
+                var posicaoTexto = texto.getBoundingClientRect().top;
+
+                if (posicaoTexto < posicaoJanela - 100) {
+                    texto.classList.add('visivel');
+                }
+            });
+        }
+
+        // Executa a função quando a página for rolada
+        window.addEventListener('scroll', mostrarTexto);
+
+        // Função para baixar o texto como arquivo .txt
+        function baixarTexto(id) {
+            var texto = document.getElementById(id).innerText; // Pega o conteúdo do parágrafo
+            var blob = new Blob([texto], { type: 'text/plain' }); // Cria um blob de texto
+            var link = document.createElement('a'); // Cria um link
+            link.href = URL.createObjectURL(blob); // Cria um URL para o blob
+            link.download = id + '.txt'; // Nome do arquivo
+            link.click(); // Simula um clique no link para baixar o arquivo
+        </body>}
+
+        // Função para compartilhar o texto (usando a Web Share API)
+        function compartilharTexto(id) {
+            var texto = document.getElementById(id).innerText; // Pega o conteúdo do parágrafo
+
+            if (navigator.share) { // Verifica se o navegador suporta a API de compartilhamento
+                navigator.share({
+                    title: 'Compartilhar Trecho',
+                    text: texto,
+                    url: window.location.href // Compartilha o texto e a URL da página
+                })
+                .then(() => console.log('Texto compartilhado com sucesso!'))
+                .catch((error) => console.error('Erro ao compartilhar:', error));
+            } else {
+                alert('Compartilhamento não suportado neste navegador.');
+            }
+        }
+    </script>
+
+
+</html>
