@@ -4,64 +4,130 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Written by Benilson A. A. D'Rocha</title>
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Georgia:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos -->
     <style>
-        body {
-            font-family: Georgia, serif;
-            background-color: #f5f5dc;
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
+        body {
+            font-family: Georgia, serif;
+            background-color: #faf9f6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+        }
+
         .caderno {
             max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
+            margin: 60px auto;
+            padding: 30px;
             background: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Texto invisível inicialmente */
-        .texto {
-            opacity: 0;
-            transform: translateY(20px); /* Move o texto para baixo */
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Animação suave */
-        }
-
-        /* Classe que será adicionada quando o texto estiver visível */
-        .texto.visivel {
-            opacity: 1;
-            transform: translateY(0); /* Texto volta para a posição original */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            position: relative;
         }
 
         h1 {
             text-align: center;
-            font-size: 2.5em;
-            font-weight: bold;
+            font-size: 2.8em;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #333;
+            letter-spacing: 2px;
         }
 
         p {
             font-size: 1.2em;
             text-align: justify;
-            margin-bottom: 10px;
+            margin-bottom: 25px;
+            color: #444;
+            line-height: 1.8;
         }
 
-        /* Estilo para os botões */
+        /* Estilo para trechos de texto */
+        .trecho {
+            position: relative;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            font-style: italic;
+            font-size: 1.1em;
+            color: #555;
+            line-height: 1.7;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Botões */
         .botao {
             background-color: #4CAF50;
             color: white;
-            padding: 10px 20px;
-            margin: 10px 0;
+            padding: 12px 24px;
+            margin-top: 10px;
             border: none;
             cursor: pointer;
+            font-size: 1em;
+            border-radius: 6px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
         .botao-compartilhar {
             background-color: #008CBA;
         }
 
+        .botao:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        .botao-compartilhar:hover {
+            background-color: #007bb5;
+        }
+
+        /* Animação suave ao aparecer */
         .texto {
-            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+
+        /* Classe que será ativada quando o texto estiver visível */
+        .texto.visivel {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .caderno {
+                margin: 20px;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2.2em;
+            }
+
+            p {
+                font-size: 1.1em;
+            }
+
+            .trecho {
+                font-size: 1em;
+            }
+
+            .botao {
+                padding: 10px 20px;
+                font-size: 0.95em;
+            }
         }
     </style>
 </head>
@@ -69,31 +135,38 @@
 
     <div class="caderno">
         <h1>Written by Benilson A. A. D'Rocha</h1>
-        
+
         <!-- Primeiro trecho de texto -->
         <div class="texto">
-            <p id="trecho1">Este é o primeiro trecho de texto que pode ser compartilhado ou baixado.</p>
+            <div class="trecho" id="trecho1">
+                Este é o primeiro trecho de texto que pode ser compartilhado ou baixado.
+            </div>
             <button class="botao" onclick="baixarTexto('trecho1')">Baixar trecho</button>
             <button class="botao botao-compartilhar" onclick="compartilharTexto('trecho1')">Compartilhar trecho</button>
         </div>
 
         <!-- Segundo trecho de texto -->
         <div class="texto">
-            <p id="trecho2">Este é o segundo trecho de texto, e ele também pode ser baixado ou compartilhado.</p>
+            <div class="trecho" id="trecho2">
+                Este é o segundo trecho de texto, e ele também pode ser baixado ou compartilhado.
+            </div>
             <button class="botao" onclick="baixarTexto('trecho2')">Baixar trecho</button>
             <button class="botao botao-compartilhar" onclick="compartilharTexto('trecho2')">Compartilhar trecho</button>
         </div>
 
         <!-- Terceiro trecho de texto -->
         <div class="texto">
-            <p id="trecho3">Este é o terceiro trecho, mostrando como é possível baixar ou compartilhar várias seções de texto separadamente.</p>
+            <div class="trecho" id="trecho3">
+                Este é o terceiro trecho, mostrando como é possível baixar ou compartilhar várias seções de texto separadamente.
+            </div>
             <button class="botao" onclick="baixarTexto('trecho3')">Baixar trecho</button>
             <button class="botao botao-compartilhar" onclick="compartilharTexto('trecho3')">Compartilhar trecho</button>
         </div>
     </div>
 
+    <!-- Scripts -->
     <script>
-        // Função para adicionar a classe 'visivel' quando o texto entra na visão do usuário
+        // Função para mostrar o texto conforme o usuário rola a página
         function mostrarTexto() {
             var textos = document.querySelectorAll('.texto');
             var posicaoJanela = window.innerHeight;
@@ -107,28 +180,27 @@
             });
         }
 
-        // Executa a função quando a página for rolada
         window.addEventListener('scroll', mostrarTexto);
 
         // Função para baixar o texto como arquivo .txt
         function baixarTexto(id) {
-            var texto = document.getElementById(id).innerText; // Pega o conteúdo do parágrafo
-            var blob = new Blob([texto], { type: 'text/plain' }); // Cria um blob de texto
-            var link = document.createElement('a'); // Cria um link
-            link.href = URL.createObjectURL(blob); // Cria um URL para o blob
-            link.download = id + '.txt'; // Nome do arquivo
-            link.click(); // Simula um clique no link para baixar o arquivo
-        </body>}
+            var texto = document.getElementById(id).innerText;
+            var blob = new Blob([texto], { type: 'text/plain' });
+            var link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = id + '.txt';
+            link.click();
+        }
 
-        // Função para compartilhar o texto (usando a Web Share API)
+        // Função para compartilhar o texto
         function compartilharTexto(id) {
-            var texto = document.getElementById(id).innerText; // Pega o conteúdo do parágrafo
+            var texto = document.getElementById(id).innerText;
 
-            if (navigator.share) { // Verifica se o navegador suporta a API de compartilhamento
+            if (navigator.share) {
                 navigator.share({
                     title: 'Compartilhar Trecho',
                     text: texto,
-                    url: window.location.href // Compartilha o texto e a URL da página
+                    url: window.location.href
                 })
                 .then(() => console.log('Texto compartilhado com sucesso!'))
                 .catch((error) => console.error('Erro ao compartilhar:', error));
@@ -138,5 +210,5 @@
         }
     </script>
 
-
+</body>
 </html>
